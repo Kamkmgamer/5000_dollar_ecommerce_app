@@ -1,8 +1,16 @@
+import { currentUser } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
 import { getInventorySummary, getInventoryAlerts, getInventoryTransactions } from "@/lib/inventory";
 import { getLowStockProducts, getOutOfStockProducts } from "@/lib/products";
 import InventoryTable from "./InventoryTable";
 
 export default async function InventoryPage() {
+  const user = await currentUser();
+
+  if (!user) {
+    redirect("/sign-in");
+  }
+
   const [summary, alerts, transactions, lowStockProducts, outOfStockProducts] = await Promise.all([
     getInventorySummary(),
     getInventoryAlerts(),
