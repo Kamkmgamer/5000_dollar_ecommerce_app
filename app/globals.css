@@ -2807,3 +2807,57 @@ html {
 .mobile-social a:hover {
   color: var(--copper);
 }
+
+.auth-page {
+  min-height: calc(100vh - 200px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: var(--bg-primary);
+}
+
+.clerk-root {
+  width: 100%;
+  max-width: 400px;
+}
+
+.clerk-card {
+  background: var(--bg-card) !important;
+  border: 1px solid var(--border);
+  border-radius: 8px !important;
+  box-shadow: var(--shadow-lg);
+}
+
+.clerk-avatar {
+  width: 32px !important;
+  height: 32px !important;
+}
+
+.nav-auth-link {
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+  padding: 0.5rem 0;
+  position: relative;
+}
+
+.nav-auth-link:hover {
+  color: var(--text-primary);
+}
+
+.mobile-auth-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.mobile-user-button {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
