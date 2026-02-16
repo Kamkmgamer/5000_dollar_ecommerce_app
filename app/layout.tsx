@@ -9,6 +9,9 @@ import MobileMenu from "@/components/MobileMenu";
 export const metadata: Metadata = {
   title: "Pro Store | Professional E-Commerce Platform",
   description: "Professional e-commerce platform for established brands. Advanced inventory management, customer segmentation, and analytics.",
+  icons: {
+    icon: "/favicon.png",
+  },
 };
 
 export default function RootLayout({
