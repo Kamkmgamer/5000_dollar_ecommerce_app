@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 export default function MobileMenu() {
     const [isOpen, setIsOpen] = useState(false);
@@ -17,7 +18,13 @@ export default function MobileMenu() {
         { label: "Accessories", href: "/category/accessories" },
         { label: "Home", href: "/category/home" },
         { label: "Wishlist", href: "/wishlist" },
+    ];
+
+    const authMenuItems = [
         { label: "Account", href: "/account" },
+        { label: "Admin", href: "/admin" },
+        { label: "Analytics", href: "/analytics" },
+        { label: "Inventory", href: "/inventory" },
     ];
 
     return (
@@ -59,7 +66,23 @@ export default function MobileMenu() {
                     </ul>
 
                     <div className="mobile-nav-footer">
-                        <Link href="/admin" onClick={toggleMenu} className="mobile-admin-link">Admin Dashboard</Link>
+                        <SignedOut>
+                            <SignInButton mode="modal">
+                                <span className="mobile-admin-link" style={{ cursor: "pointer" }}>Sign In</span>
+                            </SignInButton>
+                        </SignedOut>
+                        <SignedIn>
+                            <div className="mobile-auth-section">
+                                <div className="mobile-user-button">
+                                    <UserButton afterSignOutUrl="/" appearance={{ elements: { avatarBox: "clerk-avatar" } }} />
+                                </div>
+                                {authMenuItems.map((item) => (
+                                    <Link key={item.href} href={item.href} onClick={toggleMenu} className="mobile-admin-link">
+                                        {item.label}
+                                    </Link>
+                                ))}
+                            </div>
+                        </SignedIn>
                         <div className="mobile-social">
                             <a href="#" aria-label="Instagram"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="2" y="2" width="20" height="20" rx="5" /><circle cx="12" cy="12" r="5" /><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none" /></svg></a>
                             <a href="#" aria-label="Twitter"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M22 4s-1.1.5-2 .6A3.5 3.5 0 0021.4 3s-1.5.9-2.3 1.1A3.5 3.5 0 0012 7.5v1A8.4 8.4 0 013 4s-4 9 5 13a9.2 9.2 0 01-5.5 1.5c9 5 20 0 20-11.5 0-.3 0-.5 0-.8A5.7 5.7 0 0022 4z" /></svg></a>
