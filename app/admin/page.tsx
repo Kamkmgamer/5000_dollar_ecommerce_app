@@ -1,3 +1,5 @@
+import { currentUser } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
 import { getOrders, getOrderStats } from "@/lib/orders";
 import { getCustomerStats } from "@/lib/customers";
 import { getInventorySummary } from "@/lib/inventory";
@@ -5,6 +7,12 @@ import { getAbandonedCartStats } from "@/lib/cart";
 import OrderList from "./OrderList";
 
 export default async function AdminPage() {
+  const user = await currentUser();
+
+  if (!user) {
+    redirect("/sign-in");
+  }
+
   const [orders, orderStats, customerStats, inventorySummary, abandonedCartStats] = await Promise.all([
     getOrders(),
     getOrderStats(),
