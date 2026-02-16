@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ClerkProvider, SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import "./globals.css";
 import Cart from "@/components/Cart";
 
@@ -16,8 +17,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body>
+    <ClerkProvider>
+      <html lang="en">
+        <body>
         <div className="announcement-bar">
           <span>Complimentary shipping on orders over $100 — Same-day dispatch before 2pm — Easy 30-day returns</span>
         </div>
@@ -33,11 +35,21 @@ export default function RootLayout({
             </p>
             <nav className="nav">
               <div className="nav-desktop-links">
-                <Link href="/account">Account</Link>
-                <Link href="/admin">Admin</Link>
-                <Link href="/analytics">Analytics</Link>
-                <Link href="/inventory">Inventory</Link>
+                <SignedOut>
+                  <SignInButton mode="modal">
+                    <span className="nav-auth-link">Sign In</span>
+                  </SignInButton>
+                </SignedOut>
+                <SignedIn>
+                  <Link href="/account">Account</Link>
+                  <Link href="/admin">Admin</Link>
+                  <Link href="/analytics">Analytics</Link>
+                  <Link href="/inventory">Inventory</Link>
+                </SignedIn>
               </div>
+              <SignedIn>
+                <UserButton afterSignOutUrl="/" appearance={{ elements: { avatarBox: "clerk-avatar" } }} />
+              </SignedIn>
               <Cart />
             </nav>
           </div>
@@ -111,5 +123,6 @@ export default function RootLayout({
         </footer>
       </body>
     </html>
+    </ClerkProvider>
   );
 }
